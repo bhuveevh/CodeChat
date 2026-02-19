@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>CodeChat - Pro Stable</title>
+    <title>CodeChat - Final Fix</title>
     <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 </head>
-<body style="margin:0; padding:0; overflow:hidden; height:100dvh; background:#fff;">
+<body style="margin:0; padding:0; overflow:hidden; height:100dvh;">
 
 <div id="codechat-root"></div>
 
@@ -17,11 +17,11 @@
     const shadow = root.attachShadow({mode: 'open'});
 
     const style = `
-        :host { --m3-surface: #fef7ff; --m3-primary: #6750a4; --m3-sent: #d0bcff; --m3-received: #eaddff; display: block; width: 100vw; height: 100dvh; font-family: 'Roboto', sans-serif; overflow:hidden; }
+        :host { --m3-surface: #f7f9fc; --m3-primary: #6750a4; --m3-sent: #d1e4ff; --m3-received: #f2e7fe; display: block; width: 100vw; height: 100dvh; font-family: 'Roboto', sans-serif; overflow:hidden; }
         * { box-sizing: border-box; }
         .app-container { width: 100%; height: 100%; background: var(--m3-surface); display: flex; flex-direction: column; overflow: hidden; }
         
-        #startup { position: absolute; inset: 0; background: var(--m3-surface); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        #startup { position: absolute; inset: 0; background: #fff; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .card { background: #fff; padding: 30px; border-radius: 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 360px; text-align: center; }
         .my-id { font-size: 36px; font-weight: 500; color: var(--m3-primary); margin: 15px 0; letter-spacing: 2px; }
         .input-m3 { width: 100%; border: 1px solid #79747e; padding: 14px; border-radius: 8px; margin-bottom: 20px; font-size: 16px; outline: none; text-align: center; }
@@ -33,22 +33,22 @@
         
         .msg-box { max-width: 85%; display: flex; flex-direction: column; }
         .sent { align-self: flex-end; } .received { align-self: flex-start; }
-        .bubble { padding: 10px 14px; border-radius: 18px; font-size: 15px; word-wrap: break-word; line-height: 1.4; white-space: pre-wrap; }
-        .sent .bubble { background: var(--m3-sent); border-bottom-right-radius: 4px; }
-        .received .bubble { background: var(--m3-received); border-bottom-left-radius: 4px; }
+        .bubble { padding: 10px 14px; border-radius: 18px; font-size: 15px; word-wrap: break-word; line-height: 1.4; }
+        .sent .bubble { background: var(--m3-sent); border-bottom-right-radius: 4px; color: #001d35; }
+        .received .bubble { background: var(--m3-received); border-bottom-left-radius: 4px; color: #21005d; }
 
         .file-box { width: 220px; border-radius: 12px; overflow: hidden; position: relative; background: #eee; margin-bottom: 4px; border: 1px solid #ddd; }
         .blur-img { width: 100%; height: 160px; object-fit: cover; filter: blur(20px); display: block; }
-        .dl-btn-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--m3-primary); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-size: 13px; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        .dl-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(103, 80, 164, 0.6); backdrop-filter: blur(8px); color: white; padding: 10px 24px; border-radius: 20px; text-decoration: none; font-size: 14px; font-weight: bold; border: 1px solid rgba(255,255,255,0.3); }
+        .ext-label { position: absolute; bottom: 8px; right: 10px; background: rgba(0,0,0,0.5); color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; }
 
         .meta-row { display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 2px; }
         .file-title { font-size: 10px; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
-        .tick { font-size: 14px; color: #79747e; font-family: 'Material Icons Round'; font-weight: normal; }
+        .tick { font-size: 14px; color: #79747e; font-family: 'Material Icons Round'; }
 
-        .footer { background: #fff; border-top: 1px solid #ddd; display: flex; flex-direction: column; flex-shrink: 0; padding-bottom: env(safe-area-inset-bottom); }
+        .footer { background: #fff; border-top: 1px solid #ddd; display: flex; flex-direction: column; flex-shrink: 0; }
         .emoji-bar { display: flex; gap: 10px; padding: 8px 12px; overflow-x: auto; background: #f8f8f8; scrollbar-width: none; }
-        .emoji-bar::-webkit-scrollbar { display: none; }
-        .emoji { cursor: pointer; font-size: 20px; flex-shrink: 0; }
+        .emoji { cursor: pointer; font-size: 20px; }
         
         .input-row { padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
         .field-box { flex: 1; background: #f0f0f0; border-radius: 24px; display: flex; align-items: center; padding: 0 16px; height: 44px; }
@@ -62,9 +62,9 @@
         <div class="app-container">
             <div id="startup">
                 <div class="card">
-                    <h2 style="margin:0; color:#1d1b20;">CodeChat</h2>
+                    <h2 style="margin:0;">CodeChat</h2>
                     <div class="my-id" id="display-id">----</div>
-                    <input type="text" id="p-input" class="input-m3" placeholder="Enter Friend's Code" maxlength="4">
+                    <input type="text" id="p-input" class="input-m3" placeholder="Friend's Code" maxlength="4">
                     <button id="c-btn" class="btn-m3">Connect</button>
                 </div>
             </div>
@@ -76,10 +76,8 @@
                 <div class="chat-win" id="win"></div>
                 <div class="footer">
                     <div class="emoji-bar" id="ebar">
-                        <span class="emoji">😀</span><span class="emoji">😃</span><span class="emoji">😄</span><span class="emoji">😁</span>
-                        <span class="emoji">😅</span><span class="emoji">😂</span><span class="emoji">🤣</span><span class="emoji">😊</span>
-                        <span class="emoji">😇</span><span class="emoji">🥰</span><span class="emoji">😍</span><span class="emoji">🤩</span>
-                        <span class="emoji">😘</span><span class="emoji">😗</span><span class="emoji">😚</span><span class="emoji">😋</span>
+                        <span class="emoji">😀</span><span class="emoji">😂</span><span class="emoji">😍</span><span class="emoji">👍</span>
+                        <span class="emoji">❤️</span><span class="emoji">🔥</span><span class="emoji">🚀</span><span class="emoji">✅</span>
                     </div>
                     <div class="input-row">
                         <button class="btn-icon" id="f-btn">add_circle</button>
@@ -96,12 +94,11 @@
     const myCode = Math.floor(1000 + Math.random() * 9000).toString();
     shadow.getElementById('display-id').innerText = myCode;
     const peer = new Peer(myCode);
-    let conn, currentCall, isCalling = false;
+    let conn, currentCall, isCalling = false, wakeLock = null;
 
-    // Background Call Keep-Alive
-    let wakeLock = null;
-    const requestWakeLock = async () => {
-        try { if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); } catch (err) {}
+    // WakeLock for Background Call
+    const lockScreen = async () => {
+        try { if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); } catch (e) {}
     };
 
     shadow.getElementById('p-input').oninput = (e) => {
@@ -121,14 +118,21 @@
         shadow.getElementById('startup').style.display = 'none';
         shadow.getElementById('app-ui').style.display = 'flex';
         conn.on('data', d => {
-            if(d.type === 'text') renderMsg(d.val, 'received', d.id);
+            if(d.type === 'text') renderMsg(decodeEmoji(d.val), 'received', d.id);
             if(d.type === 'file') renderFile(d, 'received', d.id);
             if(d.type === 'read') markRead();
             if(d.type === 'end-call') resetCallUI();
         });
     }
 
-    // Emoji Logic
+    // Emoji ID Encoding Logic
+    const encodeEmoji = (str) => {
+        return str.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDC00-\uDFFF])/g, (m) => `{EID:${m.codePointAt(0)}}`);
+    };
+    const decodeEmoji = (str) => {
+        return str.replace(/{EID:(\d+)}/g, (m, p) => String.fromCodePoint(p));
+    };
+
     shadow.getElementById('ebar').onclick = (e) => {
         if(e.target.classList.contains('emoji')) {
             const inp = shadow.getElementById('m-in');
@@ -137,12 +141,11 @@
         }
     };
 
-    shadow.getElementById('m-in').onkeydown = (e) => { if(e.key === 'Enter') shadow.getElementById('s-btn').click(); };
-
     shadow.getElementById('s-btn').onclick = () => {
         const inp = shadow.getElementById('m-in');
         if(!inp.value.trim()) return;
-        conn.send({ type: 'text', val: inp.value, id: myCode });
+        const encoded = encodeEmoji(inp.value);
+        conn.send({ type: 'text', val: encoded, id: myCode });
         renderMsg(inp.value, 'sent', myCode);
         inp.value = '';
     };
@@ -161,7 +164,7 @@
     shadow.getElementById('f-btn').onclick = () => shadow.getElementById('f-in').click();
     shadow.getElementById('f-in').onchange = (e) => {
         const f = e.target.files[0];
-        if(!f || f.size > 5*1024*1024) return alert("Max 5MB!");
+        if(!f || f.size > 5*1024*1024) return alert("Max 5MB");
         const r = new FileReader();
         r.onload = (ev) => {
             const data = { type:'file', file: ev.target.result, name: f.name, mime: f.type, id: myCode };
@@ -182,8 +185,8 @@
 
         let html = `<div class="file-box">`;
         if(data.mime.startsWith('image')) html += `<img src="${url}" class="blur-img">`;
-        else html += `<div style="height:160px; display:flex; align-items:center; justify-content:center; font-size:28px; font-weight:bold; color:var(--m3-primary)">${ext}</div>`;
-        html += `<a href="${url}" download="${data.name}" class="dl-btn-text">Download File</a></div>`;
+        else html += `<div style="height:160px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:bold;">FILE</div>`;
+        html += `<span class="ext-label">${ext}</span><a href="${url}" download="${data.name}" class="dl-btn">Download</a></div>`;
         
         wrap.innerHTML = `${html}<div class="meta-row"><span class="file-title">${data.name}</span> <span style="font-size:10px">${id}</span>${t}</div>`;
         win.appendChild(wrap);
@@ -194,17 +197,17 @@
         shadow.querySelectorAll('.tick').forEach(tk => { tk.innerText = 'done_all'; tk.style.color = '#6750a4'; });
     }
 
-    // Calling Sync Logic
+    // Call Logic
     const cBtn = shadow.getElementById('call-toggle');
     cBtn.onclick = () => {
         if(!isCalling) {
             navigator.mediaDevices.getUserMedia({audio:true}).then(s => {
                 currentCall = peer.call(conn.peer, s);
-                startCall(currentCall);
-                requestWakeLock();
+                startCallUI(currentCall);
+                lockScreen();
             });
         } else {
-            conn.send({type: 'end-call'});
+            conn.send({type:'end-call'});
             if(currentCall) currentCall.close();
             resetCallUI();
         }
@@ -214,14 +217,13 @@
         if(confirm("Answer Call?")) {
             navigator.mediaDevices.getUserMedia({audio:true}).then(s => {
                 c.answer(s);
-                startCall(c);
-                requestWakeLock();
+                startCallUI(c);
+                lockScreen();
             });
         }
     });
 
-    function startCall(call) {
-        currentCall = call;
+    function startCallUI(call) {
         isCalling = true;
         cBtn.innerText = 'call_end';
         cBtn.classList.add('call-on');
